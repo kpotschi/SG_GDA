@@ -1,0 +1,17 @@
+{
+  "name": "sg_gda",
+  "version": "0.1.0",
+  "description": "PixiJS v8 project with esbuild",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch"
+  },
+  "dependencies": {
+    "pixi.js": "^8.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.0",
+    "typescript": "^5.0.0"
+  }
+}
