@@ -78,12 +78,12 @@ export default class AceOfShadowsScene extends BaseScene {
   private updateStackPositions(width: number, height: number): void {
     for (let i = 0; i < this.stacks.length; i += 1) {
       const stack = this.stacks[i];
-      const { x, y } = this.getStackPosition(i, this.stacks.length);
+      const { x, y } = this.getUpdatedStackPosition(i, this.stacks.length);
       stack.position.set(x, y);
     }
   }
 
-  private getStackPosition(
+  private getUpdatedStackPosition(
     index: number,
     total: number,
   ): { x: number; y: number } {
@@ -106,7 +106,7 @@ export default class AceOfShadowsScene extends BaseScene {
 
     this.stacks = Array.from({ length: stackCount }, (_, i) => {
       const stack = CardStack.create(this.app, i);
-      const { x, y } = this.getStackPosition(i, stackCount);
+      const { x, y } = this.getUpdatedStackPosition(i, stackCount);
       stack.position.set(x, y);
       this.root.addChild(stack);
       return stack;

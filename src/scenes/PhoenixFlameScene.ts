@@ -16,15 +16,10 @@ export default class PhoenixFlameScene extends BaseScene {
     // AssetManager.getTexture("cardsAtlas", "tarot__4_wands.png"),
     this.card.scale.set(3);
 
-    this.root.addChild(this.title, this.card, this.backButton);
+    // this.root.addChild(this.title, this.card, this.backButton);
   }
 
   resize(width: number, height: number): void {
     super.resize(width, height);
-
-    // this.card.anchor.set(0.5);
-    // this.card.position.set(width * 0.5, height * 0.5);
-
-    this.backButton.position.set(100, 50);
   }
 }

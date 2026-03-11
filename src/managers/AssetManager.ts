@@ -1,26 +1,35 @@
-import { Assets, type Spritesheet, type Texture } from "pixi.js";
+import { Assets, Texture, type Spritesheet } from "pixi.js";
 
 export default class AssetManager {
   private static isLoaded = false;
-  private static readonly atlasAlias = "cards";
-  private static readonly atlasSrc = "./assets/cards.json";
 
   static async preload(): Promise<void> {
     if (this.isLoaded) {
       return;
     }
 
-    Assets.add({ alias: this.atlasAlias, src: this.atlasSrc });
-    await Assets.load(this.atlasAlias);
+    Assets.add([
+      { alias: "cards", src: "./assets/images/cards.json" },
+      { alias: "nokia", src: "./assets/images/nokia.jpg" },
+    ]);
+    await Assets.load(["cards", "nokia"]);
     this.isLoaded = true;
   }
 
   static getTexture(alias: string, frameName?: string): Texture {
-    const atlas = Assets.get(alias) as Spritesheet | undefined;
+    const asset = Assets.get(alias);
 
-    if (!atlas) {
-      throw new Error(`Atlas '${alias}' was not loaded before use.`);
+    if (!asset) {
+      throw new Error(`Asset '${alias}' was not loaded before use.`);
     }
+
+    // Plain texture (e.g. a .jpg/.png)
+    if (asset instanceof Texture) {
+      return asset;
+    }
+
+    // Spritesheet atlas
+    const atlas = asset as Spritesheet;
 
     if (!frameName) {
       const firstTexture = Object.values(atlas.textures)[0];

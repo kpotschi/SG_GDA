@@ -3,9 +3,11 @@ import { Container, Graphics, Sprite, Text } from "pixi.js";
 import BaseScene from "./BaseScene.js";
 import type DemoApp from "../DemoApp.js";
 import type { GameConfig } from "../config/types.js";
+import AssetManager from "../managers/AssetManager.js";
 
 export default class MagicWordsScene extends BaseScene {
   private readonly card: Sprite;
+  private phone: Sprite;
 
   constructor(
     readonly app: DemoApp,
@@ -13,21 +15,22 @@ export default class MagicWordsScene extends BaseScene {
   ) {
     super(app, config);
 
-    this.card = new Sprite();
-    // AssetManager.getTexture("cardsAtlas", "tarot__3_pentacles.png"),
-    this.card.scale.set(3);
+    this.addPhoneBg();
+  }
 
-    this.root.addChild(this.title, this.card, this.backButton);
+  private addPhoneBg() {
+    this.phone = Sprite.from(AssetManager.getTexture("nokia"));
+    this.phone.anchor.set(0.5);
+    this.phone.scale.set(1.3);
+    this.phone.position.set(
+      this.app.pixiApp.renderer.width * 0.5,
+      this.app.pixiApp.renderer.height * 0.7,
+    );
+    this.root.addChild(this.phone);
   }
 
   resize(width: number, height: number): void {
     super.resize(width, height);
-    // this.title.anchor.set(0.5);
-    // this.title.position.set(width * 0.5, height * 0.15);
-
-    // this.card.anchor.set(0.5);
-    // this.card.position.set(width * 0.5, height * 0.5);
-
-    this.backButton.position.set(100, 50);
+    this.phone.position.set(width * 0.5, height * 0.7);
   }
 }

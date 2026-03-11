@@ -55,6 +55,29 @@ export default class DemoApp {
     });
 
     //debug
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "f" || e.key === "F") {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      }
+    });
+
+    const hint = document.createElement("div");
+    hint.textContent = "Press F for fullscreen";
+    Object.assign(hint.style, {
+      position: "fixed",
+      bottom: "10px",
+      left: "10px",
+      color: "rgba(255,255,255,0.4)",
+      fontSize: "12px",
+      fontFamily: "sans-serif",
+      pointerEvents: "none",
+    });
+    document.body.appendChild(hint);
   }
 
   public getRenderer(): Renderer {
