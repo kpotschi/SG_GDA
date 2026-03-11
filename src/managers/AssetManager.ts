@@ -11,8 +11,9 @@ export default class AssetManager {
     Assets.add([
       { alias: "cards", src: "./assets/images/cards.json" },
       { alias: "nokia", src: "./assets/images/nokia.jpg" },
+      { alias: "missing", src: "./assets/images/missing.png" },
     ]);
-    await Assets.load(["cards", "nokia"]);
+    await Assets.load(["cards", "nokia", "missing"]);
     this.isLoaded = true;
   }
 
@@ -20,15 +21,16 @@ export default class AssetManager {
     const asset = Assets.get(alias);
 
     if (!asset) {
-      throw new Error(`Asset '${alias}' was not loaded before use.`);
+      console.warn(
+        `Asset '${alias}' was not loaded before use, returning missing texture.`,
+      );
+      return Assets.get("missing") as Texture;
     }
 
-    // Plain texture (e.g. a .jpg/.png)
     if (asset instanceof Texture) {
       return asset;
     }
 
-    // Spritesheet atlas
     const atlas = asset as Spritesheet;
 
     if (!frameName) {

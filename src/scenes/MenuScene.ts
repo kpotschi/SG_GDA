@@ -11,7 +11,7 @@ export default class MenuScene extends BaseScene {
   constructor(readonly app: DemoApp) {
     super(app, {
       id: "menu",
-      name: "Main Menu",
+      name: "Kevin's Corner",
       description: "Select a game to play",
     });
 

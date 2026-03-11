@@ -12,11 +12,7 @@ export const CONSTANTS = {
       class: AceOfShadowsScene,
       data: {
         CARDS_AMOUNT: 144,
-        STACKS_AMOUNT: 4,
-        STACK_RADIUS_RATIO: 0.2,
-        STACK_CENTER_Y_RATIO: 0.56,
-        CARD_STACK_OFFSET_X: 0.18,
-        CARD_STACK_OFFSET_Y: 0.6,
+        STACKS_AMOUNT: 5,
       },
     },
     {
@@ -24,6 +20,15 @@ export const CONSTANTS = {
       name: "Magic Words",
       description: `Create a system that allows you to combine text and images like custom emojis. Use it to render a dialogue between characters with the data taken from this endpoint:`,
       class: MagicWordsScene,
+      data: {
+        API_URL:
+          "https://private-624120-softgamesassignment.apiary-mock.com/v2/magicwords",
+
+        SCREEN_OFFSET_X: 6,
+        SCREEN_OFFSET_Y: -104,
+        SCREEN_WIDTH: 158,
+        SCREEN_HEIGHT: 156,
+      },
     },
     {
       id: "phoenixFlame",

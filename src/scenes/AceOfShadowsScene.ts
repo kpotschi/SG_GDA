@@ -1,10 +1,9 @@
+import gsap from "gsap";
 import { Sprite } from "pixi.js";
 import type DemoApp from "../DemoApp.js";
 import type { GameConfig } from "../config/types.js";
-import AssetManager from "../managers/AssetManager.js";
-import gsap from "gsap";
-import BaseScene from "./BaseScene.js";
 import CardStack from "../entities/CardStack.js";
+import BaseScene from "./BaseScene.js";
 
 export default class AceOfShadowsScene extends BaseScene {
   private stacks: CardStack[];

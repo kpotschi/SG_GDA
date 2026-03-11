@@ -55,7 +55,7 @@ export default abstract class BaseScene {
 
   resize(_width: number, _height: number): void {
     this.title.anchor.set(0.5);
-    this.title.position.set(_width * 0.5, _height * 0.22);
+    this.title.position.set(_width * 0.5, _height * 0.1);
     this.backButton?.position.set(_width - 100, 50);
   }
 
