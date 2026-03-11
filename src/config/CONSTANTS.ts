@@ -12,6 +12,7 @@ export const CONSTANTS = {
       class: AceOfShadowsScene,
       data: {
         CARDS_AMOUNT: 144,
+        STACKS_AMOUNT: 4,
         STACK_RADIUS_RATIO: 0.2,
         STACK_CENTER_Y_RATIO: 0.56,
         CARD_STACK_OFFSET_X: 0.18,

@@ -417,6 +417,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/stats.js@npm:^0":
+  version: 0.17.4
+  resolution: "@types/stats.js@npm:0.17.4"
+  checksum: 10c0/4fe0429998519f0476f03a25b4900b4d4a1474606478657271e40a884f7936ba902ea564b1c95cfd33a8e84af46cef6e1e98bb23e86fd3b6676cd5b974987151
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:8.57.0":
   version: 8.57.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.57.0"
@@ -2137,6 +2144,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.21.0"
     "@types/node": "npm:^25.4.0"
+    "@types/stats.js": "npm:^0"
     esbuild: "npm:^0.25.0"
     esbuild-plugin-clean: "npm:^1.0.1"
     esbuild-plugin-copy: "npm:^2.1.1"
@@ -2147,6 +2155,7 @@ __metadata:
     gsap: "npm:^3.14.2"
     pixi.js: "npm:^8.8.1"
     prettier: "npm:^3.5.3"
+    stats.js: "npm:^0.17.0"
     typescript: "npm:~5.7.3"
     typescript-eslint: "npm:^8.25.0"
   languageName: unknown
@@ -2209,6 +2218,13 @@ __metadata:
   dependencies:
     minipass: "npm:^7.0.3"
   checksum: 10c0/cf6408a18676c57ff2ed06b8a20dc64bb3e748e5c7e095332e6aecaa2b8422b1e94a739a8453bf65156a8a47afe23757ba4ab52d3ea3b62322dc40875763e17a
+  languageName: node
+  linkType: hard
+
+"stats.js@npm:^0.17.0":
+  version: 0.17.0
+  resolution: "stats.js@npm:0.17.0"
+  checksum: 10c0/03392b4b9eb15cb285b8cf46c5dd68e4e7b556d8e4c72a3a48e6bd2ab6f2e72a02b145d465f594450df081d8f94a45e8ac1112a0d507a200a5768504082ca080
   languageName: node
   linkType: hard
 

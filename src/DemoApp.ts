@@ -5,10 +5,11 @@ import { CONSTANTS } from "./config/CONSTANTS.js";
 import AssetManager from "./managers/AssetManager.js";
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
+import Stats from "stats.js";
 
 export default class DemoApp {
   public readonly pixiApp: Application;
-  private sceneManager: SceneManager;
+  public sceneManager: SceneManager;
 
   constructor() {
     this.pixiApp = new Application();
@@ -41,6 +42,19 @@ export default class DemoApp {
 
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+
+    const stats = new Stats();
+    stats.showPanel(0);
+    stats.dom.style.position = "absolute";
+    stats.dom.style.left = "0px";
+    stats.dom.style.top = "0px";
+    document.body.appendChild(stats.dom);
+
+    this.pixiApp.ticker.add(() => {
+      stats.update();
+    });
+
+    //debug
   }
 
   public getRenderer(): Renderer {
