@@ -1,4 +1,5 @@
 import { Assets, Container, Graphics, Sprite, Text, Texture } from "pixi.js";
+import AssetManager from "../../managers/AssetManager";
 
 type MessageData = {
   name: string;
@@ -42,7 +43,6 @@ export default class Message extends Container {
 
   private build() {
     const { name, text, side, avatarUrl, emojis, maxWidth } = this.messageData;
-    console.log(this.messageData);
 
     const padding = 4;
     const avatarSize = 20;
@@ -51,7 +51,8 @@ export default class Message extends Container {
 
     let avatar: Sprite | null = null;
     if (avatarUrl) {
-      const tex = Assets.get<Texture>(avatarUrl);
+      const tex = AssetManager.getTexture(avatarUrl);
+
       if (tex) {
         avatar = new Sprite(tex);
         avatar.width = avatarSize;
@@ -89,8 +90,9 @@ export default class Message extends Container {
         avatar.position.set(0, 0);
         content.position.set(avatarSize + gap, 0);
       } else {
-        content.position.set(0, 0);
-        avatar.position.set(content.width + gap, 0);
+        const totalW = contentW + avatarSize + gap;
+        content.position.set(maxWidth - totalW, 0);
+        avatar.position.set(maxWidth - avatarSize, 0);
       }
       this.bubble.addChild(avatar);
     } else {
@@ -118,22 +120,21 @@ export default class Message extends Container {
       if (emojiMatch) {
         const eName = emojiMatch[1];
         const emojiDef = emojis.find((e) => e.name === eName);
-        if (emojiDef) {
-          const tex = Assets.get<Texture>(emojiDef.url);
-          if (tex) {
-            if (cx + emojiSize > wrapWidth) {
-              cx = 0;
-              cy += emojiSize + 2;
-            }
-            const sprite = new Sprite(tex);
-            sprite.width = emojiSize;
-            sprite.height = emojiSize;
-            sprite.position.set(cx, cy);
-            container.addChild(sprite);
-            cx += emojiSize + 1;
-            continue;
-          }
+
+        const textureName = emojiDef ? emojiDef.url : "_missing";
+        const tex = AssetManager.getTexture(textureName);
+
+        if (cx + emojiSize > wrapWidth) {
+          cx = 0;
+          cy += emojiSize + 2;
         }
+        const sprite = new Sprite(tex);
+        sprite.width = emojiSize;
+        sprite.height = emojiSize;
+        sprite.position.set(cx, cy);
+        container.addChild(sprite);
+        cx += emojiSize + 1;
+        continue;
       }
 
       // Plain text – word-wrap manually

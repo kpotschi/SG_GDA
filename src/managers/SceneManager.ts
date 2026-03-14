@@ -4,8 +4,8 @@ import SceneOne from "../scenes/AceOfShadowsScene.js";
 import SceneThree from "../scenes/PhoenixFlameScene.js";
 import SceneTwo from "../scenes/MagicWordsScene.js";
 import BaseScene from "../scenes/BaseScene.js";
-import { CONSTANTS } from "../config/CONSTANTS.js";
 import DemoApp from "../DemoApp.js";
+import { AVAILABLE_GAMES } from "../config/AVAILABLE_GAMES.js";
 
 export default class SceneManager {
   private activeScene: BaseScene | null = null;
@@ -19,9 +19,7 @@ export default class SceneManager {
       this.activeScene = null;
     }
 
-    const nextSceneConfig = CONSTANTS.AVAILABLE_GAMES.find(
-      (game) => game.id === sceneId,
-    );
+    const nextSceneConfig = AVAILABLE_GAMES.find((game) => game.id === sceneId);
 
     let nextScene = null;
     if (!nextSceneConfig) {

@@ -1,9 +1,9 @@
 import { Container, Graphics, Text } from "pixi.js";
 import BaseScene from "./BaseScene.js";
-import { CONSTANTS } from "../config/CONSTANTS.js";
 import type { GameConfig } from "../config/types.js";
 import Button from "../entities/ui/Button.js";
 import type DemoApp from "../DemoApp.js";
+import { AVAILABLE_GAMES } from "../config/AVAILABLE_GAMES.js";
 
 export default class MenuScene extends BaseScene {
   private readonly menuButtons: Container[] = [];
@@ -19,7 +19,7 @@ export default class MenuScene extends BaseScene {
   }
 
   enter(): void {
-    CONSTANTS.AVAILABLE_GAMES.forEach((config: GameConfig) => {
+    AVAILABLE_GAMES.forEach((config: GameConfig) => {
       const button = Button.create(this.app, config);
       this.menuButtons.push(button);
       this.root.addChild(button);

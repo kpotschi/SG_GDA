@@ -1,6 +1,7 @@
 import { Container, Graphics, Text } from "pixi.js";
 import type DemoApp from "../DemoApp.js";
 import type { GameConfig } from "../config/types.js";
+import { CONSTANTS } from "../config/CONSTANTS.js";
 
 const BACK_BUTTON_COLOR = 0xcfa5b4;
 
@@ -16,7 +17,7 @@ export default abstract class BaseScene {
     this.root = new Container();
 
     if (config) {
-      this.addTitle();
+      this.addHeading();
     }
 
     if (config.id !== "menu") {
@@ -24,7 +25,7 @@ export default abstract class BaseScene {
     }
   }
 
-  private addTitle() {
+  private addHeading() {
     this.title = new Text({
       text: this.config?.name,
       style: {
@@ -36,7 +37,7 @@ export default abstract class BaseScene {
 
     this.title.position.set(
       this.app.pixiApp.renderer.width * 0.5,
-      this.app.pixiApp.renderer.height * 0.22,
+      this.app.pixiApp.renderer.height * CONSTANTS.HEADING_Y_RATIO,
     );
 
     this.root.addChild(this.title);
@@ -55,7 +56,7 @@ export default abstract class BaseScene {
 
   resize(_width: number, _height: number): void {
     this.title.anchor.set(0.5);
-    this.title.position.set(_width * 0.5, _height * 0.1);
+    this.title.position.set(_width * 0.5, _height * CONSTANTS.HEADING_Y_RATIO);
     this.backButton?.position.set(_width - 100, 50);
   }
 

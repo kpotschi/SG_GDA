@@ -1,7 +1,7 @@
 import { Application, Renderer } from "pixi.js";
 // import AssetManager from "./managers/AssetManager.js";
 import SceneManager from "./managers/SceneManager.js";
-import { CONSTANTS } from "./config/CONSTANTS.js";
+import { CONSTANTS } from "./config/AVAILABLE_GAMES.js";
 import AssetManager from "./managers/AssetManager.js";
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";

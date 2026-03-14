@@ -170,6 +170,8 @@ export default class MagicWordsScene extends BaseScene {
   resize(width: number, height: number): void {
     super.resize(width, height);
     this.phone.position.set(width * 0.5, height * 0.55);
+    const ratio = Math.min(width / 800, height / 1200);
+    this.phone.scale.set(ratio * 1.3);
   }
 
   exit(): void {
