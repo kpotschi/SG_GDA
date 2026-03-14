@@ -3,6 +3,7 @@ import BaseScene from "./BaseScene.js";
 import type DemoApp from "../DemoApp.js";
 import type { GameConfig } from "../config/types.js";
 import AssetManager from "../managers/AssetManager.js";
+import Message from "../entities/ui/Message.js";
 
 type Avatar = {
   name: string;
@@ -23,7 +24,9 @@ export default class MagicWordsScene extends BaseScene {
   private phone: Sprite;
   private screenContainer: Container;
   private screenText: Text;
-  private messages: string[] = [];
+  private messageList: Container;
+  private messageWidgets: Message[] = [];
+  private messages: MessageData | null = null;
   private messageInterval: number | null = null;
 
   constructor(
@@ -52,16 +55,24 @@ export default class MagicWordsScene extends BaseScene {
     this.screenContainer = new Container();
     this.phone.addChild(this.screenContainer);
 
-    const bg = new Graphics()
-      .roundRect(
-        this.config.data!.SCREEN_OFFSET_X - this.config.data!.SCREEN_WIDTH / 2,
-        this.config.data!.SCREEN_OFFSET_Y - this.config.data!.SCREEN_HEIGHT / 2,
-        this.config.data!.SCREEN_WIDTH,
-        this.config.data!.SCREEN_HEIGHT,
-        5,
-      )
-      .fill("#276f24");
+    const sx =
+      this.config.data!.SCREEN_OFFSET_X - this.config.data!.SCREEN_WIDTH / 2;
+    const sy =
+      this.config.data!.SCREEN_OFFSET_Y - this.config.data!.SCREEN_HEIGHT / 2;
+    const sw = this.config.data!.SCREEN_WIDTH;
+    const sh = this.config.data!.SCREEN_HEIGHT;
+
+    const bg = new Graphics().roundRect(sx, sy, sw, sh, 5).fill("#276f24");
     this.screenContainer.addChild(bg);
+
+    // Clipping mask for messages
+    const clipMask = new Graphics().rect(sx, sy, sw, sh).fill(0xffffff);
+    this.screenContainer.addChild(clipMask);
+
+    this.messageList = new Container();
+    this.messageList.position.set(sx + 4, sy + 4);
+    this.messageList.mask = clipMask;
+    this.screenContainer.addChild(this.messageList);
 
     this.screenText = new Text({
       text: "Starting...",
@@ -69,7 +80,7 @@ export default class MagicWordsScene extends BaseScene {
         fontSize: 16,
         fill: 0x000000,
         wordWrap: true,
-        wordWrapWidth: this.config.data!.SCREEN_WIDTH - 10,
+        wordWrapWidth: sw - 10,
         align: "left",
       },
     });
@@ -85,11 +96,11 @@ export default class MagicWordsScene extends BaseScene {
     try {
       const res = await fetch(this.config.data!.API_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data: MessageData = await res.json();
+      this.messages = await res.json();
 
       const urls = [
-        ...(data.avatars?.map((a) => a.url) ?? []),
-        ...(data.emojies?.map((e) => e.url) ?? []),
+        ...(this.messages?.avatars?.map((a) => a.url) ?? []),
+        ...(this.messages?.emojies?.map((e) => e.url) ?? []),
       ];
 
       await Promise.allSettled(
@@ -109,19 +120,50 @@ export default class MagicWordsScene extends BaseScene {
   }
 
   private showMessages() {
-    if (this.messages.length === 0) {
+    const dialogue = this.messages?.dialogue ?? [];
+    if (dialogue.length === 0) {
       this.screenText.text = "No new messages :(";
       return;
     }
 
-    let index = 0;
-    this.screenText.text = this.messages[index];
+    // Hide the placeholder text
+    this.screenText.visible = false;
 
-    if (this.messages.length > 1) {
+    const avatars = this.messages?.avatars ?? [];
+    const emojis = this.messages?.emojies ?? [];
+    const sw = this.config.data!.SCREEN_WIDTH - 8; // padding each side
+
+    let yOffset = 0;
+    for (const entry of dialogue) {
+      const avatar = avatars.find((a) => a.name === entry.name);
+      const msg = new Message({
+        name: entry.name,
+        text: entry.text,
+        side: avatar?.position ?? "left",
+        avatarUrl: avatar?.url,
+        emojis,
+        maxWidth: sw,
+      });
+      msg.position.set(0, yOffset);
+      this.messageList.addChild(msg);
+      this.messageWidgets.push(msg);
+      yOffset += msg.height + 4;
+    }
+
+    // Auto-scroll if messages overflow the screen
+    const sh = this.config.data!.SCREEN_HEIGHT - 8;
+    if (yOffset > sh) {
+      let scrollY = 0;
+      const totalScroll = yOffset - sh;
       this.messageInterval = window.setInterval(() => {
-        index = (index + 1) % this.messages.length;
-        this.screenText.text = this.messages[index];
-      }, 3000);
+        scrollY += 0.5;
+        if (scrollY > totalScroll + sh) scrollY = -sh; // loop
+        this.messageList.y =
+          this.config.data!.SCREEN_OFFSET_Y -
+          this.config.data!.SCREEN_HEIGHT / 2 +
+          4 -
+          Math.max(0, Math.min(scrollY, totalScroll));
+      }, 30);
     }
   }
 
