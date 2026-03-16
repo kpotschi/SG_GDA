@@ -41,4 +41,4 @@ KP
 ### Phoenix Flame
 
 - well, all kinds of stuff: in an ideal world I would probably write a ParticleEmitter class or leverage the Phaser one.
-- I understand the impact of recyclingand instancing on performance.
+- I understand the impact of recycling and instancing on performance.
