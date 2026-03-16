@@ -1,18 +1,18 @@
-import { Assets, Container, Sprite } from "pixi.js";
-import DemoApp from "../DemoApp";
+import { Container, Sprite } from "pixi.js";
 import AssetManager from "../managers/AssetManager";
+import AceOfShadowsScene from "../scenes/AceOfShadowsScene";
 
 export default class CardStack extends Container {
   constructor(
-    readonly app: DemoApp,
+    readonly scene: AceOfShadowsScene,
     readonly index: number,
   ) {
     super();
     this.sortableChildren = true;
   }
 
-  static create(app: DemoApp, index: number): CardStack {
-    const stack = new CardStack(app, index);
+  static create(scene: AceOfShadowsScene, index: number): CardStack {
+    const stack = new CardStack(scene, index);
     return stack;
   }
 
@@ -20,7 +20,7 @@ export default class CardStack extends Container {
     const randomTexture = AssetManager.getRandomTexture("cards");
     const card = new Sprite(randomTexture);
     card.anchor.set(0.5);
-    card.scale.set(1.5);
+    card.scale.set(this.scene.config.data?.CARDS_SCALE ?? 1);
 
     this.addChild(card);
   }

@@ -25,15 +25,22 @@ export default class MenuScene extends BaseScene {
       this.root.addChild(button);
     });
 
-    const renderer = this.app.getRenderer();
-    this.resize(renderer.width, renderer.height);
+    const { width, height } = this.app.pixiApp.screen;
+    this.resize(width, height);
   }
 
   resize(width: number, height: number): void {
     this.menuButtons.forEach((button, index) => {
       button.position.set(width * 0.5, height * 0.42 + index * 100);
     });
-
     super.resize(width, height);
+  }
+
+  exit(): void {
+    for (const button of this.menuButtons) {
+      this.root.removeChild(button);
+    }
+    this.menuButtons.length = 0;
+    super.exit();
   }
 }

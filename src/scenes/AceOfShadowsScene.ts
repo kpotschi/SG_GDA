@@ -86,13 +86,11 @@ export default class AceOfShadowsScene extends BaseScene {
     index: number,
     total: number,
   ): { x: number; y: number } {
-    const renderer = this.app.getRenderer();
-    const centerX = renderer.width * 0.5;
-    const centerY =
-      renderer.height * (this.config.data?.STACK_CENTER_Y_RATIO ?? 0.56);
+    const { width, height } = this.app.pixiApp.screen;
+    const centerX = width * 0.5;
+    const centerY = height * (this.config.data?.STACK_CENTER_Y_RATIO ?? 0.56);
     const radius =
-      Math.min(renderer.width, renderer.height) *
-      (this.config.data?.STACK_RADIUS_RATIO ?? 0.2);
+      Math.min(width, height) * this.config.data?.STACK_RADIUS_RATIO;
     const angle = -Math.PI / 2 + (Math.PI * 2 * index) / total;
     return {
       x: centerX + Math.cos(angle) * radius,
@@ -104,7 +102,7 @@ export default class AceOfShadowsScene extends BaseScene {
     const stackCount = Number(this.config.data?.STACKS_AMOUNT) || 4;
 
     this.stacks = Array.from({ length: stackCount }, (_, i) => {
-      const stack = CardStack.create(this.app, i);
+      const stack = CardStack.create(this, i);
       const { x, y } = this.getUpdatedStackPosition(i, stackCount);
       stack.position.set(x, y);
       this.root.addChild(stack);

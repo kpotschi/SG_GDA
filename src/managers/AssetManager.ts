@@ -10,10 +10,11 @@ export default class AssetManager {
 
     Assets.add([
       { alias: "cards", src: "./assets/images/cards.json" },
+      { alias: "particles", src: "./assets/images/particles.json" },
       { alias: "nokia", src: "./assets/images/nokia.jpg" },
       { alias: "missing", src: "./assets/images/missing.png" },
     ]);
-    await Assets.load(["cards", "nokia", "missing"]);
+    await Assets.load(["cards", "nokia", "missing", "particles"]);
     this.isLoaded = true;
   }
 

@@ -45,8 +45,8 @@ export default class MagicWordsScene extends BaseScene {
     this.phone.anchor.set(0.5);
     this.phone.scale.set(1.3);
     this.phone.position.set(
-      this.app.pixiApp.renderer.width * 0.55,
-      this.app.pixiApp.renderer.height * 0.5,
+      this.app.pixiApp.screen.width * 0.55,
+      this.app.pixiApp.screen.height * 0.5,
     );
     this.root.addChild(this.phone);
   }
@@ -167,14 +167,14 @@ export default class MagicWordsScene extends BaseScene {
     }
   }
 
-  resize(width: number, height: number): void {
+  public resize(width: number, height: number): void {
     super.resize(width, height);
     this.phone.position.set(width * 0.5, height * 0.55);
     const ratio = Math.min(width / 800, height / 1200);
     this.phone.scale.set(ratio * 1.3);
   }
 
-  exit(): void {
+  public exit(): void {
     if (this.messageInterval !== null) {
       clearInterval(this.messageInterval);
     }

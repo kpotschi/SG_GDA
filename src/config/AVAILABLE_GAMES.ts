@@ -12,6 +12,8 @@ export const AVAILABLE_GAMES = [
     data: {
       CARDS_AMOUNT: 144,
       STACKS_AMOUNT: 5,
+      CARDS_SCALE: 1.2,
+      STACK_RADIUS_RATIO: 0.3,
     },
   },
   {
@@ -34,5 +36,9 @@ export const AVAILABLE_GAMES = [
     name: "Phoenix Flame",
     description: `Make a particle-effect demo showing a great fire effect. Keep the number of images at max 10 sprites on the screen at the same time.`,
     class: PhoenixFlameScene,
+    data: {
+      MAX_PARTICLES: 10,
+      FIRE_FRAMES: ["fire-1.png", "fire-2.png", "fire-3.png"],
+    },
   },
 ] as GameConfig[];

@@ -36,8 +36,8 @@ export default abstract class BaseScene {
     });
 
     this.title.position.set(
-      this.app.pixiApp.renderer.width * 0.5,
-      this.app.pixiApp.renderer.height * CONSTANTS.HEADING_Y_RATIO,
+      this.app.pixiApp.screen.width * 0.5,
+      this.app.pixiApp.screen.height * CONSTANTS.HEADING_Y_RATIO,
     );
 
     this.root.addChild(this.title);
@@ -48,8 +48,8 @@ export default abstract class BaseScene {
   }
 
   public enter(): void {
-    const renderer = this.app.getRenderer();
-    this.resize(renderer.width, renderer.height);
+    const { width, height } = this.app.pixiApp.screen;
+    this.resize(width, height);
   }
 
   update(_delta: number): void {}

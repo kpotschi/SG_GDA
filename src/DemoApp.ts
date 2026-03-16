@@ -1,11 +1,9 @@
 import { Application, Renderer } from "pixi.js";
-// import AssetManager from "./managers/AssetManager.js";
-import SceneManager from "./managers/SceneManager.js";
-import { CONSTANTS } from "./config/AVAILABLE_GAMES.js";
-import AssetManager from "./managers/AssetManager.js";
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
 import Stats from "stats.js";
+import AssetManager from "./managers/AssetManager.js";
+import SceneManager from "./managers/SceneManager.js";
 
 export default class DemoApp {
   public readonly pixiApp: Application;
@@ -20,6 +18,8 @@ export default class DemoApp {
     await this.pixiApp.init({
       background: 0x121d2d,
       antialias: true,
+      resolution: window.devicePixelRatio || 1,
+      autoDensity: true,
       resizeTo: window,
     });
 
@@ -43,6 +43,8 @@ export default class DemoApp {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
 
+    //debug
+
     const stats = new Stats();
     stats.showPanel(0);
     stats.dom.style.position = "absolute";
@@ -53,8 +55,6 @@ export default class DemoApp {
     this.pixiApp.ticker.add(() => {
       stats.update();
     });
-
-    //debug
 
     window.addEventListener("keydown", (e) => {
       if (e.key === "f" || e.key === "F") {
@@ -85,9 +85,10 @@ export default class DemoApp {
   }
 
   private readonly handleResize = (): void => {
+    this.pixiApp.renderer.resize(window.innerWidth, window.innerHeight);
     this.sceneManager?.resize(
-      this.pixiApp.renderer.width,
-      this.pixiApp.renderer.height,
+      this.pixiApp.screen.width,
+      this.pixiApp.screen.height,
     );
   };
 
